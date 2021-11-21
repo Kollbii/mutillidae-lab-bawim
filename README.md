@@ -8,7 +8,6 @@
 Link do GitHub'a:
 [github.com/OWASP/ASVS](https://github.com/OWASP/ASVS/blob/v4.0.3/4.0/docs_en/OWASP%20Application%20Security%20Verification%20Standard%204.0.3-en.csv)
 
-
 # Lab
 ### Spis treści
 1. Lab0: Adding user, login, password policies
@@ -35,9 +34,30 @@ Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z
 | V2.1.5 | Verify users can change their password. | 620 | 5.1.1.2 |
 | V2.1.6 | Verify that password change functionality requires the user's current and new password.  | 620| 5.1.1.2 |
 
-1. 
-### Lab 1
-1. 
+1. Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
+
+
+### Lab 1 - Session Hijacking 
+1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.
+    <details>
+    <sumary>Podpowiedź 1 (rozwiń)<sumary>
+    ```
+        W adresie url `http://localhost/index.php?page=robots-txt.php` podmień wartość `page` na `robots.txt`.
+        http://localhost/index.php?page=robots.txt
+    ```
+    <details>
+    <details>
+    <sumary>Podpowiedź 2 (rozwiń)<sumary>
+    ```
+        Przekieruj się na adres `http://localhost/passwords/`
+    ```
+    <details>
+1. Zapisz dane logowania dowolnego użytkownika.
+1. Oczywiście sposobów wydobycia ciasteczka sesji jest wiele (prezentacja). Wykorzystamy do tego narzędzie BURP SUITE.
+1. Zaloguj się na wybranego użytkownika. Włącz przechwytywnie zapytania. Odśwież stronę.
+1. Zapisz ciasteczko sesji w osobnym pliku.
+![Cookie section](z1.png)
+
 
 
 # Tabela raportu
