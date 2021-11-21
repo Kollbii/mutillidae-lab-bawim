@@ -15,6 +15,13 @@ Link do GitHub'a:
 1. Lab2: Cross Site Scripting (XSS)
 1. Lab3: #TODO
 
+### Instalacja maszyny
+```bash
+git clone https://github.com/webpwnized/mutillidae-docker
+cd mutillidae-docker
+docker-compose up
+```
+
 ### Lab 0 Przykład pracy z ASVS
 1. Sprawdź czy możesz stworzyć użytkownika, którego hasło posiada mniej niż 12 znaków.  
 Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z przykładowego rozwiązania zaprezentowanego w prezentacji). Na koniec zasugeruj rozwiązanie problemu.  
@@ -58,7 +65,8 @@ Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 1. Stwórz tabelę oceny zagrożenia.
 
 ### Lab 2 - Cross Site Scripting (XSS)
-W tej częsci postaramy się wykraść od użytkowników przeglądających blog ich ciasteczka sesji, żeby móc wykorzystać je tak jak w labie wcześniejszym.
+W tej częsci postaramy się wykraść od użytkowników przeglądających blog ich ciasteczka sesji, żeby móc wykorzystać je tak jak w labie wcześniejszym.  
+
 #### Persistent
 1. Zaloguj się na dowolnego użytkownika i przejdź na stronę `http://localhost/index.php?page=view-someones-blog.php`.  
 lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> Persistent (Second order) -> Add to your blog.  
@@ -80,10 +88,15 @@ lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> Persistent (Second order) -
 ![Downloading file with cookie sesion](assets/z2.png)
 Oczywiście prawdopodobieństwo, że ktoś zostawi taki plik na publicznym komputerze w firmie po pobraniu jest małe - jednak ciągle niezerowe...
 1. Zapisz zgodnie z wytycznymi wpis w tabeli oceny ryzyka. Weź pod uwagę, że każda strona wyciągająca zainfekowany rekord z bazy danych wywoła znajdujący się tam skrypt.
+
 #### Reflected
 Działa tak samo jak Persistent tylko jednorazowo na daną stronę. (prezentacja)
+Jak myślisz dlaczego przeglądarka dopuszcza do wykonywania takiego kodu? Zwiększ poziom bezpieczeństwa na poziom `5`. Spróbuj wpisać prosty skrypt.
 
-### Lab 3 - Insert name
+
+### Lab 3 - Insecure Direct Object Reference (IDOR)
+
+
 
 # Tabela raportu
 1. W ramach ćwiczeń uczestnicy opiszą sposób wywołania, działania i potencjalnego załatania podatności.
