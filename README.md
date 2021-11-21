@@ -22,6 +22,9 @@ cd mutillidae-docker
 docker-compose up
 ```
 
+Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
+
+
 ### Lab 0 Przykład pracy z ASVS
 1. Sprawdź czy możesz stworzyć użytkownika, którego hasło posiada mniej niż 12 znaków.  
 Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z przykładowego rozwiązania zaprezentowanego w prezentacji). Na koniec zasugeruj rozwiązanie problemu.  
@@ -93,9 +96,29 @@ Oczywiście prawdopodobieństwo, że ktoś zostawi taki plik na publicznym kompu
 Działa tak samo jak Persistent tylko jednorazowo na daną stronę. (prezentacja)
 Jak myślisz dlaczego przeglądarka dopuszcza do wykonywania takiego kodu? Zwiększ poziom bezpieczeństwa na poziom `5`. Spróbuj wpisać prosty skrypt.
 
+#### DOM-based XSS
+1. Wejdź na stronę `http://127.0.0.1/index.php?page=html5-storage.php`  
+lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> DOM-Based -> HTML5-web-storage. 
+1. Zapoznaj się z poniższym fragmentem kodu, który jest wywoływany gdy wpisywanyjest klucz i wartość na stronie.
+
+```js
+var setMessage = function(/* String */ pMessage){
+		var lMessageSpan = document.getElementById("idAddItemMessageSpan");
+		lMessageSpan.innerHTML = pMessage;
+		lMessageSpan.setAttribute("class","success-message");
+	};// end function setMessage
+```  
+Podpowiedź: Zobacz jak działa metoda `innerHTML`
+
+1. Spróbuj wpisać payload z alertem w javascript `<script>alert(1)</script>`. Czy wpisany kod działa?
+1. Wykorzystamy inny element DOM np. znacznik `<img>`. Proszę wpisać w polu wartość `<img src=nothing onerror="alert(document.cookie)"/>"`
+1. Od razu po wysłaniu wykonuje się kod z JS, który był ukryty wewnątrz tagu `<img>`.
+1. Uzupełnij tabelę o nową podatność. Opisz ją.
+
 
 ### Lab 3 - Insecure Direct Object Reference (IDOR)
-
+1. Webshell
+1. `& ls /` on DNSlookup site
 
 
 # Tabela raportu
