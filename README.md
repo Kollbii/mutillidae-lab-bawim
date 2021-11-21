@@ -41,7 +41,7 @@ Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z
 1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.
     <sumary>Podpowiedź 1 (rozwiń)</sumary>
     <details>
-        1. W adresie url `http://localhost/index.php?page=robots-txt.php` podmień wartość `page` na `robots.txt`.
+        1. W adresie url `http://localhost/index.php?page=robots-txt.php` podmień wartość `page` na `robots.txt`.  
         2. http://localhost/index.php?page=robots.txt
     </details>
     <sumary>Podpowiedź 2 (rozwiń)</sumary>
@@ -49,12 +49,15 @@ Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z
         1. Przekieruj się na adres `http://localhost/passwords/`
     </details>
 1. Zapisz dane logowania dowolnego użytkownika.
-1. Oczywiście sposobów wydobycia ciasteczka sesji jest wiele (prezentacja). Wykorzystamy do tego narzędzie BURP SUITE.
-1. Zaloguj się na wybranego użytkownika. Włącz przechwytywnie zapytania. Odśwież stronę.
+1. Oczywiście sposobów wydobycia ciasteczka sesji jest wiele (prezentacja). Proszę wykorzystać do tego narzędzie BURP SUITE. Zaloguj się na wybranego użytkownika. Włącz przechwytywnie zapytania. Odśwież stronę.
 1. Zapisz ciasteczko sesji w osobnym pliku.
 ![Cookie section](z1.png)
+1. Wyłącz przechwytywanie. Wyloguj się z aktualnego użytkownika i zaloguj się na innego lub stwórz własne konto.
+1. Włącz przechwytywanie. Odśwież stronę i przejdź do BURP SUITE.
+1. Podmień wartość `Cookie` na skopiowaną wartość wcześniejszego użytkownika. Naciśnij `Forward`. Właśnie zostałeś uwierzytelniony jako drugi użytkownik. Jednak po przejściu na dowolną inną stronę otrzymujemy zresetowane ciasteczko użytkownika, na którego się logowaliśmy.
+1. Jeśli chcemy używać danej sesji podczas wykonywania ataków należy użyć opcji `Process cookies in redirections`.
 
-
+### Lab 2 - 
 
 # Tabela raportu
 1. W ramach ćwiczeń uczestnicy opiszą sposób wywołania, działania i potencjalnego załatania podatności. My zrobimy na zajęciach 1 przykład.
