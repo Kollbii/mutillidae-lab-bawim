@@ -39,19 +39,17 @@ Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z
 
 ### Lab 1 - Session Hijacking 
 1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.
-    <details>
     <sumary>Podpowiedź 1 (rozwiń)<sumary>
+    <details>
     ```
         W adresie url `http://localhost/index.php?page=robots-txt.php` podmień wartość `page` na `robots.txt`.
         http://localhost/index.php?page=robots.txt
     ```
-    <details>
-    <details>
     <sumary>Podpowiedź 2 (rozwiń)<sumary>
+    <details>
     ```
         Przekieruj się na adres `http://localhost/passwords/`
     ```
-    <details>
 1. Zapisz dane logowania dowolnego użytkownika.
 1. Oczywiście sposobów wydobycia ciasteczka sesji jest wiele (prezentacja). Wykorzystamy do tego narzędzie BURP SUITE.
 1. Zaloguj się na wybranego użytkownika. Włącz przechwytywnie zapytania. Odśwież stronę.
