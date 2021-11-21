@@ -10,9 +10,9 @@ Link do GitHub'a:
 
 # Lab
 ### Spis treści
-1. Lab0: Adding user, login, password policies
-1. Lab1: 17.A7 Cookie injection
-1. Lab2: 17.A7 Persistent - Add to blog
+1. Lab0: Adding user, login, password policies. ASVS.
+1. Lab1: Session Hijacking
+1. Lab2: Cross Site Scripting (XSS)
 1. Lab3: #TODO
 
 ### Lab 0 Przykład pracy z ASVS
@@ -34,30 +34,51 @@ Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z
 | V2.1.5 | Verify users can change their password. | 620 | 5.1.1.2 |
 | V2.1.6 | Verify that password change functionality requires the user's current and new password.  | 620| 5.1.1.2 |
 
-1. Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
+Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 
 
 ### Lab 1 - Session Hijacking 
-1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.
+1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.  
     <sumary>Podpowiedź 1 (rozwiń)</sumary>
     <details>
-        1. W adresie url `http://localhost/index.php?page=robots-txt.php` podmień wartość `page` na `robots.txt`.  
-        2. http://localhost/index.php?page=robots.txt
+    2. W adresie url `http://localhost/index.php?page=robots-txt.php` podmień zawartość `page` na `robots.txt`.  
+    2. `http://localhost/index.php?page=robots.txt`
     </details>
     <sumary>Podpowiedź 2 (rozwiń)</sumary>
     <details>
-        1. Przekieruj się na adres `http://localhost/passwords/`
+    2. Przekieruj się na adres `http://localhost/passwords/`
     </details>
 1. Zapisz dane logowania dowolnego użytkownika.
-1. Oczywiście sposobów wydobycia ciasteczka sesji jest wiele (prezentacja). Proszę wykorzystać do tego narzędzie BURP SUITE. Zaloguj się na wybranego użytkownika. Włącz przechwytywnie zapytania. Odśwież stronę.
+1. Oczywiście sposobów wydobycia ciasteczka sesji jest wiele (prezentacja). Stworzymy prosty scenariusz w celu którego wykorzystamy narzędzie BURP SUITE. Zaloguj się na wybranego użytkownika. Włącz przechwytywnie zapytania. Odśwież stronę.
 1. Zapisz ciasteczko sesji w osobnym pliku.
-![Cookie section](z1.png)
+![Cookie section](assets/z1.png)
 1. Wyłącz przechwytywanie. Wyloguj się z aktualnego użytkownika i zaloguj się na innego lub stwórz własne konto.
 1. Włącz przechwytywanie. Odśwież stronę i przejdź do BURP SUITE.
 1. Podmień wartość `Cookie` na skopiowaną wartość wcześniejszego użytkownika. Naciśnij `Forward`. Właśnie zostałeś uwierzytelniony jako drugi użytkownik. Jednak po przejściu na dowolną inną stronę otrzymujemy zresetowane ciasteczko użytkownika, na którego się logowaliśmy.
 1. Jeśli chcemy używać danej sesji podczas wykonywania ataków należy użyć opcji `Process cookies in redirections`.
+1. Stwórz tabelę oceny zagrożenia.
 
-### Lab 2 - 
+### Lab 2 - Cross Site Scripting (XSS)
+W tej częsci postaramy się wykraść od użytkowników przeglądających blog ich ciasteczka sesji, żeby móc wykorzystać je tak jak w labie wcześniejszym.
+1. Zaloguj się na dowolnego użytkownika i przejdź na stronę `http://localhost/index.php?page=view-someones-blog.php`.  
+OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> Persistent (Second order) -> Add to your blog.  
+1. Dla sprawdzenia czy podatność istnieje wykorzystamy najprostszy payload. Wpisz w polu wpisywania: `<script>alert(document.cookie)</script>`.  
+Wyślij treść bloga na serwer. Od razu pojawia się alert w którym są informacje z aktualnej sesji. Podatność istnieje - wykorzystajmy ją.
+1. Do zaprezentowania ideii wstrzykniemy kod, który zaproponuje odwiedzającemu zapisanie pewnego pliku. Jego zawartością będzie ciasteczko z sesją.
+1. Na zalogowanym użytkowniku proszę wprowadzić zapis o treści:  
+```js
+var a = document.createElement("a");
+a.href = window.URL.createObjectURL(new Blob([document.cookie], {type: "text/plain"}));
+a.download="DONT_DELETE_THIS_IMPORTANT.txt";
+a.click();
+```
+1. Zauważ, że treścią która zostanie wpisana do pliku *.txt będzie wartość `document.cookie`. Pamiętaj, żeby owinąć całość odpowiednim tagiem!
+1. Po zapisaniu bloga. Wyloguj się z aktualnego użytkownika i zaloguj na innego. Wejdź na stronę `http://localhost/index.php?page=view-someones-blog.php`.  
+OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> Persistent (Second order) -> View someone's blog.  
+1. Wyszukaj blogi wcześniejszego użytkownika.
+1. And voilà!
+![Downloading file with cookie sesion](assets/z2.png)
+Oczywiście prawdopodobieństwo, że ktoś zostawi taki plik na publicznym komputerze w firmie po pobraniu jest małe - jednak ciągle nie zerowe...
 
 # Tabela raportu
-1. W ramach ćwiczeń uczestnicy opiszą sposób wywołania, działania i potencjalnego załatania podatności. My zrobimy na zajęciach 1 przykład.
+1. W ramach ćwiczeń uczestnicy opiszą sposób wywołania, działania i potencjalnego załatania podatności.

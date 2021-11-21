@@ -1,0 +1,27 @@
+### Podatność: [Nazwa]
+Wpływ na ryzyko: [Mały/Średni/Duży] (Ocena obiektywna/przykład z prezentacji)
+ASVS: vX.X.X
+Sposób wykorzystania:
+Skutki wykorzystania:
+Propozycja usunięcia:
+
+### Podatność: [Nazwa]
+Wpływ na ryzyko: [Mały/Średni/Duży] (Ocena obiektywna/przykład z prezentacji)
+ASVS: vX.X.X
+Sposób wykorzystania:
+Skutki wykorzystania:
+Propozycja usunięcia:
+
+### Podatność: [Nazwa]
+Wpływ na ryzyko: [Mały/Średni/Duży] (Ocena obiektywna/przykład z prezentacji)
+ASVS: vX.X.X
+Sposób wykorzystania:
+Skutki wykorzystania:
+Propozycja usunięcia:
+
+### Podatność: [Nazwa]
+Wpływ na ryzyko: [Mały/Średni/Duży] (Ocena obiektywna/przykład z prezentacji)
+ASVS: vX.X.X
+Sposób wykorzystania:
+Skutki wykorzystania:
+Propozycja usunięcia:
