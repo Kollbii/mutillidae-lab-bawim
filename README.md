@@ -57,11 +57,11 @@ Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.  
     <details>
     <summary>Podpowiedź 1 (rozwiń)</summary>
-    1. W adresie url <code>http://localhost/index.php?page=robots-txt.php</code> podmień zawartość `page` na `robots.txt`. (http://localhost/index.php?page=robots.txt)
+    1. W adresie url <code>http://localhost/index.php?page=robots-txt.php</code> podmień zawartość <code>page</code> na <code>robots.txt</code>. (<code>http://localhost/index.php?page=robots.txt</code>)
     </details>
     <details>
     <summary>Podpowiedź 2 (rozwiń)</summary>
-    1. Przekieruj się na adres `http://localhost/passwords/`
+    1. Przekieruj się na adres <code>http://localhost/passwords/</code>
     </details>
 1. Zapisz dane logowania dowolnego użytkownika.
 1. Oczywiście sposobów wydobycia ciasteczka sesji jest wiele (prezentacja). Stworzymy prosty scenariusz w celu którego wykorzystamy narzędzie BURP SUITE. Zaloguj się na wybranego użytkownika. Włącz przechwytywnie zapytania. Odśwież stronę.
