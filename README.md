@@ -57,7 +57,7 @@ Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.  
     <details>
     <summary>Podpowiedź 1 (rozwiń)</summary>
-    1. W adresie url `http://localhost/index.php?page=robots-txt.php` podmień zawartość `page` na `robots.txt`. (http://localhost/index.php?page=robots.txt)
+    1. W adresie url <code>http://localhost/index.php?page=robots-txt.php</code> podmień zawartość `page` na `robots.txt`. (http://localhost/index.php?page=robots.txt)
     </details>
     <details>
     <summary>Podpowiedź 2 (rozwiń)</summary>
