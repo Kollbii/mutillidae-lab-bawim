@@ -7,13 +7,14 @@
 # ASVS 4
 Link do GitHub'a:
 [github.com/OWASP/ASVS](https://github.com/OWASP/ASVS/blob/v4.0.3/4.0/docs_en/OWASP%20Application%20Security%20Verification%20Standard%204.0.3-en.csv)
+# CVSS
 
 # Lab
 ### Spis treści
 1. Lab0: Adding user, login, password policies. ASVS.
 1. Lab1: Session Hijacking
 1. Lab2: Cross Site Scripting (XSS)
-1. Lab3: #TODO
+1. Lab3: Insecure Direct Object Reference (IDOR)
 
 ### Instalacja maszyny
 ```bash
@@ -22,8 +23,13 @@ cd mutillidae-docker
 docker-compose up
 ```
 
-Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
+Jeśli wystąpią problemy:
+1. Doinstaluj docker-compose  `sudo apt install docker-compose`.
+1. Dodaj siebie do grupy `docker`. `sudo usermod -aG docker $USER`.
+1. Opcjonalnie zrestartuj serwis `sudo service docker restart`.
+1. Uruchom dockera z pozycji roota `sudo docker-compose up`.
 
+Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
 
 ### Lab 0 Przykład pracy z ASVS
 1. Sprawdź czy możesz stworzyć użytkownika, którego hasło posiada mniej niż 12 znaków.  
@@ -49,11 +55,11 @@ Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 
 ### Lab 1 - Session Hijacking 
 1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.  
-    <sumary>Podpowiedź 1 (rozwiń)</sumary>
+    <summary>Podpowiedź 1 (rozwiń)</summary>
     <details>
-    1. W adresie url `http://localhost/index.php?page=robots-txt.php` podmień zawartość `page` na `robots.txt`. (`http://localhost/index.php?page=robots.txt`)
+    1. W adresie url `http://localhost/index.php?page=robots-txt.php` podmień zawartość `page` na `robots.txt`. (http://localhost/index.php?page=robots.txt)
     </details>
-    <sumary>Podpowiedź 2 (rozwiń)</sumary>
+    <summary>Podpowiedź 2 (rozwiń)</summary>
     <details>
     1. Przekieruj się na adres `http://localhost/passwords/`
     </details>
