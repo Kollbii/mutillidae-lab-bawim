@@ -55,12 +55,12 @@ Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 
 ### Lab 1 - Session Hijacking 
 1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.  
-    <summary>Podpowiedź 1 (rozwiń)</summary>
     <details>
+    <summary>Podpowiedź 1 (rozwiń)</summary>
     1. W adresie url `http://localhost/index.php?page=robots-txt.php` podmień zawartość `page` na `robots.txt`. (http://localhost/index.php?page=robots.txt)
     </details>
-    <summary>Podpowiedź 2 (rozwiń)</summary>
     <details>
+    <summary>Podpowiedź 2 (rozwiń)</summary>
     1. Przekieruj się na adres `http://localhost/passwords/`
     </details>
 1. Zapisz dane logowania dowolnego użytkownika.
