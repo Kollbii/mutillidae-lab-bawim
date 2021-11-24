@@ -142,5 +142,4 @@ function printit ($string) {
 		print "$string\n";
 	}
 }
-
 ?> 

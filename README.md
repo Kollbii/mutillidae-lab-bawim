@@ -7,9 +7,8 @@
 # ASVS 4
 Link do GitHub'a:
 [github.com/OWASP/ASVS](https://github.com/OWASP/ASVS/blob/v4.0.3/4.0/docs_en/OWASP%20Application%20Security%20Verification%20Standard%204.0.3-en.csv)
-# CVSS
 
-# Lab
+# Laboratoria
 ### Spis treści
 1. Lab0: Adding user, login, password policies. ASVS.
 1. Lab1: Session Hijacking
@@ -18,6 +17,7 @@ Link do GitHub'a:
 1. Lab4: Dodatkowe
 
 ### Instalacja maszyny
+#### Opcja 1 (Zalecana)
 Wersja: 2.8.59
 ```bash
 git clone https://github.com/webpwnized/mutillidae-docker
@@ -32,22 +32,19 @@ Jeśli wystąpią problemy:
 1. Uruchom dockera z pozycji roota `sudo docker-compose up`.
 1. Jeśli pojawia się błąd, że adres jest już _"zbindowany"_ `sudo service apache2 stop`
 
-Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
-
-### Opcja 2 - TYLKO JEŚLI NIE DZIAŁA PIERWSZA
+#### Opcja 2 (Tylko jeśli nie działa pierwsza)
 Wersja: 2.6.52 
 1. `docker pull bltsec/mutillidae-docker`
 1. `docker run -d -p 80:80 -p 443:443 --name owasp17 bltsec/mutillidae-docker`
 1. Przejdź do `localhost/mutillidae`
 
+Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
+
 ### Lab 0 Przykład pracy z ASVS
 1. Sprawdź czy możesz stworzyć użytkownika, którego hasło posiada mniej niż 12 znaków.  
 Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z przykładowego rozwiązania zaprezentowanego w prezentacji). Na koniec zasugeruj rozwiązanie problemu.  
-
 1. Spróbuj zmienić hasło użytkownika. Sprawdź czy wymagana jest znajomość starego hasła. Zapisz numer ASVS, oceń poziom ryzyka oraz zasugeruj rozwiązanie problemu.
-
 1. Wykorzystaj tabelę niżej i spróbuj zidentyfikować pozostałe (o ile istnieją) wady.
-
 1. Wycinek tabeli do pomocy
 
 | # | Description | CWE | NIST |
@@ -60,7 +57,6 @@ Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z
 | V2.1.6 | Verify that password change functionality requires the user's current and new password.  | 620| 5.1.1.2 |
 
 Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
-
 
 ### Lab 1 - Session Hijacking 
 1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.  
@@ -115,7 +111,6 @@ Jak myślisz dlaczego przeglądarka dopuszcza do wykonywania takiego kodu? Zwię
 1. Wejdź na stronę `http://127.0.0.1/index.php?page=html5-storage.php`  
 lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> DOM-Based -> HTML5-web-storage. 
 1. Zapoznaj się z poniższym fragmentem kodu, który jest wywoływany gdy wpisywanyjest klucz i wartość na stronie.
-
 ```js
 var setMessage = function(/* String */ pMessage){
 		var lMessageSpan = document.getElementById("idAddItemMessageSpan");
@@ -123,16 +118,17 @@ var setMessage = function(/* String */ pMessage){
 		lMessageSpan.setAttribute("class","success-message");
 	};// end function setMessage
 ```  
-Podpowiedź: Zobacz jak działa metoda `innerHTML`
+
+Podpowiedź: Zobacz jak działa metoda `innerHTML`.
 
 1. Spróbuj wpisać payload z alertem w javascript `<script>alert(1)</script>`. Czy wpisany kod działa?
-1. Wykorzystamy inny element DOM np. znacznik `<img>`. Proszę wpisać w polu wartość `<img src=nothing onerror="alert(document.cookie)"/>"`
+1. Wykorzystamy inny element DOM np. znacznik `<img>`. Proszę wpisać w polu wartość `<img src=nothing onerror="alert(document.cookie)"/>"`.
 1. Od razu po wysłaniu wykonuje się kod z JS, który był ukryty wewnątrz tagu `<img>`.
 1. Uzupełnij tabelę o nową podatność. Opisz ją.
 
-
 ### Lab 3 - Reverse shell
-Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, które można sprawdzać to połączenia TCP/UPD na niefiltrowanych portach.
+Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, które można sprawdzać to połączenia na niefiltrowanych portach, brak walidacji w przesyłaniu plików i tym podobne.
+
 #### Sposób 1 
 1. Udaj się na stronę `http://localhost/index.php?page=upload-file.php`
 1. Przygotuj skrypt w PHP (plik znajduje się w tym repozytorium pod nazwą `rev.php`) i zapisz w lokalnym folderze. Podmień adres IP na swój i zapamiętaj/zmień port.
@@ -154,7 +150,8 @@ Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, kt�
 /var/www/mutillidae/classes/MySQLHandler.php:	static public $SAMURAI_WTF_PASSWORD = "samurai";
 /var/www/mutillidae/classes/MySQLHandler.php:	        $this->mMySQLConnection = new mysqli($pHOSTNAME,$pUSERNAME, $pPASSWORD, NULL, $pPORT);
 ```
-1. Hasło do bazy to `samurai`
+1. Hasło do bazy to `samurai`.
+1. Weź pod uwagę, że strona jest cały czas w stanie "zawieszenia".
 
 #### Sposób 2
 1. Upewnij się, że aplikacja ciągle działa w tle.
@@ -169,6 +166,7 @@ Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, kt�
 
 1. Tak samo jak w sposobie 1 spróbuj odszukać hasło do bazy danych.
 1. Porównaj jakie masz uprawnienia w obu przypadkach? Co może być powodem?
+1. Opisz podatności w tabeli.
 
 ### Lab 4 - Dodatkowe
 Ta część laboratorium jest przeznaczona na własny rekonesans. Wcześniejsze przykłady były podane w wąskim zakresie dlatego teraz pora na rozwinięcie skrzydeł. Przetestuj aplikację we własnym zakresie - z tym co wiesz lub chcesz poznać. Propozycja: skorzystaj z podanych list i testuj wszystko po kolei. 
@@ -190,6 +188,10 @@ Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzyst
 <summary>Podpowiedź do drugiego sposobu (rozwiń)</summary>
 <code>&find /var/www/mutillidae -name "*.php" | xargs egrep -i "password" | grep "="</code>
 </details>
+
+1. I wszystko co inne postaraj się oceniać w tabeli oceny zagrożeń.
+
 ## Źrodła 
 1. https://www.computersecuritystudent.com/SECURITY_TOOLS/MUTILLIDAE/MUTILLIDAE_2511/lesson10/index.html
 1. https://github.com/21y4d/blindSQLi/blob/master/blindSQLi.py
+1. https://github.com/Wh1ter0sEo4/reverse_shell_php/blob/main/reverse_shell.php
