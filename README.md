@@ -141,6 +141,7 @@ Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, kt�
 1. W nasłuchiwanym terminalu powinien pojawić się shell.
 ![Reverse shell](assets/z3.png)  
 
+
 ### Lab 4 - Dodatkowe
 Ta część laboratorium jest przeznaczona na własny rekonesans. Wcześniejsze przykłady były podane w wąskim zakresie dlatego teraz pora na rozwinięcie skrzydeł. Przetestuj aplikację we własnym zakresie - z tym co wiesz lub chcesz poznać. Propozycja: skorzystaj z podanych list i testuj wszystko po kolei. 
 
@@ -153,8 +154,10 @@ Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzyst
 1. Na stronie `http://127.0.0.1/index.php?page=dns-lookup.php` możesz podejrzeć strukturę katalogów wykorzystując polecenie `ls`. Sprawdź czym musisz je poprzedzić, żeby zadziałało.
 <details>
 <summary>Podpowiedź(rozwiń)</summary>
+<p>
 1. Wpisz <code>& ls /</code>. Możesz dokładnie podejrzeć strukturę plików. Możesz też wpisać <code>& whoami</code> lub <code>& id</code>w celu sprawdzenia jakim użytkownikiem (oraz z jakimi uprawnieniami) jesteś.  
 ![Reverse shell](assets/z4.png) 
+</p>
 </details>
 
 
