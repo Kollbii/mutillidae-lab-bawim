@@ -126,6 +126,14 @@ Podpowiedź: Zobacz jak działa metoda `innerHTML`
 1. Webshell
 1. `& ls /` on DNSlookup site
 
+### Lab 4 - Dodatkowe
+Ta część laboratorium jest przeznaczona na własny rekonesans. Wcześniejsze przykłady były podane w wąskim zakresie dlatego teraz pora na rozwinięcie skrzydeł. Przetestuj aplikację we własnym zakresie - z tym co wiesz lub chcesz poznać. Propozycja: skorzystaj z podanych list i testuj wszystko po kolei. 
+
+Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzystaj z payload'ów z tego repozytorium:
+[github.com/swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
+
+1. Znajdź inne podatności np. na stronie logowania (`SQL injection`)
+
 
 # Tabela raportu
 1. W ramach ćwiczeń uczestnicy opiszą sposób wywołania, działania i potencjalnego załatania podatności.
