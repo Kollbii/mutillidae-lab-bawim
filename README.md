@@ -10,11 +10,11 @@ Link do GitHub'a:
 
 # Laboratoria
 ### Spis treści
-1. Lab0: Adding user, login, password policies. ASVS.
-1. Lab1: Session Hijacking
-1. Lab2: Cross Site Scripting (XSS)
-1. Lab3: Reverse Shell
-1. Lab4: Dodatkowe
+1. Zadanie 0: Adding user, login, password policies. ASVS.
+1. Zadanie 1: Session Hijacking
+1. Zadanie 2: Cross Site Scripting (XSS)
+1. Zadanie 3: Reverse Shell
+1. Zadanie 4: Dodatkowe
 
 ### Instalacja maszyny
 #### Opcja 1 (Zalecana)
@@ -40,7 +40,7 @@ Wersja: 2.6.52
 
 Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
 
-### Lab 0 Przykład pracy z ASVS
+### Zadanie 0 Przykład pracy z ASVS
 1. Sprawdź czy możesz stworzyć użytkownika, którego hasło posiada mniej niż 12 znaków.  
 Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z przykładowego rozwiązania zaprezentowanego w prezentacji). Na koniec zasugeruj rozwiązanie problemu.  
 1. Spróbuj zmienić hasło użytkownika. Sprawdź czy wymagana jest znajomość starego hasła. Zapisz numer ASVS, oceń poziom ryzyka oraz zasugeruj rozwiązanie problemu.
@@ -58,7 +58,7 @@ Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z
 
 Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 
-### Lab 1 - Session Hijacking 
+### Zadanie 1 - Session Hijacking 
 1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.  
     <details>
     <summary>Podpowiedź 1 (rozwiń)</summary>
@@ -78,7 +78,7 @@ Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 1. Właśnie zostałeś uwierzytelniony jako drugi użytkownik. Jednak po przejściu na dowolną inną stronę otrzymujemy zresetowane ciasteczko użytkownika, na którego się logowaliśmy. Jeśli chcemy używać danej sesji podczas wykonywania ataków należy użyć opcji `Process cookies in redirections`.
 1. Stwórz tabelę oceny zagrożenia.
 
-### Lab 2 - Cross Site Scripting (XSS)
+### Zadanie 2 - Cross Site Scripting (XSS)
 W tej częsci postaramy się wykraść od użytkowników przeglądających blog ich ciasteczka sesji, żeby móc wykorzystać je tak jak w labie wcześniejszym.  
 
 #### Persistent
@@ -126,7 +126,7 @@ Podpowiedź: Zobacz jak działa metoda `innerHTML`.
 1. Od razu po wysłaniu wykonuje się kod z JS, który był ukryty wewnątrz tagu `<img>`.
 1. Uzupełnij tabelę o nową podatność. Opisz ją.
 
-### Lab 3 - Reverse shell
+### Zadanie 3 - Reverse shell
 Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, które można sprawdzać to połączenia na niefiltrowanych portach, brak walidacji w przesyłaniu plików i tym podobne.
 
 #### Sposób 1 
@@ -168,7 +168,7 @@ Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, kt�
 1. Porównaj jakie masz uprawnienia w obu przypadkach? Co może być powodem?
 1. Opisz podatności w tabeli.
 
-### Lab 4 - Dodatkowe
+### Zadanie 4 - Dodatkowe
 Ta część laboratorium jest przeznaczona na własny rekonesans. Wcześniejsze przykłady były podane w wąskim zakresie dlatego teraz pora na rozwinięcie skrzydeł. Przetestuj aplikację we własnym zakresie - z tym co wiesz lub chcesz poznać. Propozycja: skorzystaj z podanych list i testuj wszystko po kolei. 
 
 Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzystaj z payload'ów z tego repozytorium: [github.com/swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
@@ -193,5 +193,4 @@ Jeśli testując elementy aplikacji uznasz atak siłowy za potrzebny to skorzyst
 
 ## Źrodła 
 1. https://www.computersecuritystudent.com/SECURITY_TOOLS/MUTILLIDAE/MUTILLIDAE_2511/lesson10/index.html
-1. https://github.com/21y4d/blindSQLi/blob/master/blindSQLi.py
 1. https://github.com/Wh1ter0sEo4/reverse_shell_php/blob/main/reverse_shell.php
