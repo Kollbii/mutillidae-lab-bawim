@@ -16,7 +16,7 @@ Link do GitHub'a:
 1. Zadanie 3: Reverse Shell
 1. Zadanie 4: Dodatkowe
 
-### Instalacja maszyny
+### Instalacja maszyny i przygotowanie środowiska
 #### Opcja 1 (Zalecana)
 Wersja: 2.8.59
 ```bash
@@ -40,6 +40,9 @@ Wersja: 2.6.52
 
 Kod źródłowy każdej strony możesz podejrzeć na `http://127.0.0.1/index.php?page=source-viewer.php`
 
+#### BURP SUITE
+Podczas pracy przyda się narzędzie BURP SUITE. Zainstaluj je jeśli jest taka potrzeba.
+
 ### Zadanie 0 Przykład pracy z ASVS
 1. Sprawdź czy możesz stworzyć użytkownika, którego hasło posiada mniej niż 12 znaków.  
 Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z przykładowego rozwiązania zaprezentowanego w prezentacji). Na koniec zasugeruj rozwiązanie problemu.  
@@ -59,7 +62,7 @@ Zapisz numer ASVS, oceń poziom ryzyka (Możesz zrobić to sam lub skorzystać z
 Przypomnienie: Prowadź tabelę w której będziesz wszystko zapisywał.
 
 ### Zadanie 1 - Session Hijacking 
-1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogę być przechowane hasła użytkowników.  
+1. Wykorzystując wiedzę o pliku robots.txt odszukaj lokalizację na stronie gdzie mogą być przechowane hasła użytkowników.  
     <details>
     <summary>Podpowiedź 1 (rozwiń)</summary>
     1. W adresie url <code>http://localhost/index.php?page=robots-txt.php</code> podmień zawartość <code>page</code> na <code>robots.txt</code>. (<code>http://localhost/index.php?page=robots.txt</code>)
@@ -83,34 +86,35 @@ W tej częsci postaramy się wykraść od użytkowników przeglądających blog 
 
 #### Persistent
 1. Zaloguj się na dowolnego użytkownika i przejdź na stronę `http://localhost/index.php?page=view-someones-blog.php`.  
-lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> Persistent (Second order) -> Add to your blog.  
+Lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> Persistent (Second order) -> Add to your blog.  
 1. Dla sprawdzenia czy podatność istnieje wykorzystamy najprostszy payload. Wpisz w polu wpisywania: `<script>alert(document.cookie)</script>`.  
 Wyślij treść bloga na serwer. Od razu pojawia się alert w którym są informacje z aktualnej sesji. Podatność istnieje - wykorzystajmy ją.
 1. Do zaprezentowania ideii wstrzykniemy kod, który zaproponuje odwiedzającemu zapisanie pewnego pliku. Jego zawartością będzie ciasteczko z sesją.
 1. Na zalogowanym użytkowniku proszę wprowadzić zapis o treści:  
     ```js
     var a = document.createElement("a");
-    a.href = window.URL.createObjectURL(new Blob([document.cookie], {type: "text/plain"}));
+    a.href = window.URL.createObjectURL(new Blob([WHAT_TO_EXTRACT?], {type: "text/plain"}));
     a.download="DONT_DELETE_THIS_IMPORTANT.txt";
     a.click();
     ```
-1. Zauważ, że treścią która zostanie wpisana do pliku *.txt będzie wartość `document.cookie`. Pamiętaj, żeby owinąć całość odpowiednim tagiem!
+1. Zauważ, że treścią która zostanie wpisana do pliku *.txt będzie wartość `WHAT_TO_EXTRACT` czy aby na pewno jest to poprawna wartość? ;)  
+    <details>
+    <summary>Podpowiedź (rozwiń)</summary>
+    1. Podmień zawartość <code>WHAT_TO_EXTRACT</code> na <code>document.cookie</code>. 
+    </details>
+Pamiętaj, żeby owinąć całość odpowiednim tagiem!
 1. Po zapisaniu bloga. Wyloguj się z aktualnego użytkownika i zaloguj na innego. Wejdź na stronę `http://localhost/index.php?page=view-someones-blog.php`.  
-lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> Persistent (Second order) -> View someone's blog.  
+Lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> Persistent (Second order) -> View someone's blog.  
 1. Wyszukaj blogi wcześniejszego użytkownika.
 1. And voilà!
 ![Downloading file with cookie sesion](assets/z2.png)
 Oczywiście prawdopodobieństwo, że ktoś zostawi taki plik na publicznym komputerze w firmie po pobraniu jest małe - jednak ciągle niezerowe...
 1. Zapisz zgodnie z wytycznymi wpis w tabeli oceny ryzyka. Weź pod uwagę, że każda strona wyciągająca zainfekowany rekord z bazy danych wywoła znajdujący się tam skrypt.
 
-#### Reflected
-Działa tak samo jak Persistent tylko jednorazowo na daną stronę. (prezentacja)
-Jak myślisz dlaczego przeglądarka dopuszcza do wykonywania takiego kodu? Zwiększ poziom bezpieczeństwa na poziom `5`. Spróbuj wpisać prosty skrypt.
-
 #### DOM-based XSS
-1. Wejdź na stronę `http://127.0.0.1/index.php?page=html5-storage.php`  
-lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> DOM-Based -> HTML5-web-storage. 
-1. Zapoznaj się z poniższym fragmentem kodu, który jest wywoływany gdy wpisywanyjest klucz i wartość na stronie.
+1. Wejdź na stronę `http://127.0.0.1/index.php?page=html5-storage.php`.  
+Lub OWASP 2017 -> A7 - Cross Site Scripting (XSS) -> DOM-Based -> HTML5-web-storage. 
+1. Zapoznaj się z poniższym fragmentem kodu, który jest wywoływany gdy wpisywany jest klucz i wartość na stronie.
 ```js
 var setMessage = function(/* String */ pMessage){
 		var lMessageSpan = document.getElementById("idAddItemMessageSpan");
@@ -126,6 +130,10 @@ Podpowiedź: Zobacz jak działa metoda `innerHTML`.
 1. Od razu po wysłaniu wykonuje się kod z JS, który był ukryty wewnątrz tagu `<img>`.
 1. Uzupełnij tabelę o nową podatność. Opisz ją.
 
+#### Reflected
+Działa tak samo jak Persistent tylko jednorazowo na daną stronę. (prezentacja)
+Jak myślisz dlaczego przeglądarka dopuszcza do wykonywania takiego kodu? Zwiększ poziom bezpieczeństwa na poziom `5`. Spróbuj wpisać prosty skrypt.
+
 ### Zadanie 3 - Reverse shell
 Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, które można sprawdzać to połączenia na niefiltrowanych portach, brak walidacji w przesyłaniu plików i tym podobne.
 
@@ -139,20 +147,40 @@ Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, kt�
 1. Nawiguj do `http://localhost/index.php?page=/tmp/<nazwa_twojego_pliku>.php`
 1. W momencie wejścia na stronę wywołuje się skrypt a w terminalu powinniśmy mieć aktywne połączenie.
 ![Reverse Shell 1](assets/z6.png)
-1. Posiadając dostęp do wewnętrznej struktury katalogów spróbujmy znaleźć hasło do bazy danych.
-1. Sprawdźmy wszystkie pliki o rozszerzeniu "*.php". `find / -name "*.php" | xargs grep -i "password" | grep "="`
-1. W całym ciągu tekstu interesuje nas ten urywek
-```
-/var/www/mutillidae/classes/YouTubeVideoHandler.php:	public $HowtoResetRootPasswordinMySQLMariaDB = 143;
-/var/www/mutillidae/classes/MySQLHandler.php:	static public $mMySQLDatabasePassword = DB_PASSWORD;
-/var/www/mutillidae/classes/MySQLHandler.php:	static public $MUTILLIDAE_DBV1_PASSWORD = "";
-/var/www/mutillidae/classes/MySQLHandler.php:	static public $MUTILLIDAE_DBV2_PASSWORD = "mutillidae";
-/var/www/mutillidae/classes/MySQLHandler.php:	static public $SAMURAI_WTF_PASSWORD = "samurai";
-/var/www/mutillidae/classes/MySQLHandler.php:	        $this->mMySQLConnection = new mysqli($pHOSTNAME,$pUSERNAME, $pPASSWORD, NULL, $pPORT);
-```
-1. Hasło do bazy to `samurai`.
-1. Weź pod uwagę, że strona jest cały czas w stanie "zawieszenia".
+1. Posiadając dostęp do wewnętrznej struktury katalogów spróbuj znaleźć hasło do bazy danych.
+    <details>
+    <summary>Podpowiedź 1 (rozwiń)</summary>
+    1. Wyszukaj wszytkie pliki o rozszerzeniu "\*.php" <code>find / -name "*.php"</code>. 
+    </details>
 
+    <details>
+    <summary>Podpowiedź 2 (rozwiń)</summary>
+    1. Wykorzystaj narzędzie do wyszukiwania wzorca tekstu <code>grep -i "password"</code> lub <code>grep "="</code>. 
+    </details>
+
+    <details>
+    <summary>Podpowiedź 3 (rozwiń)</summary>
+    1. Ostateczne polecenie może wyglądać w ten sposób <code>find / -name "*.php" | xargs grep -i "password" | grep "="</code>. 
+    </details>
+
+1. W całym ciągu tekstu interesuje nas ten urywek
+
+    ```
+    /var/www/mutillidae/classes/YouTubeVideoHandler.php:	public $HowtoResetRootPasswordinMySQLMariaDB = 143;
+    /var/www/mutillidae/classes/MySQLHandler.php:	static public $mMySQLDatabasePassword = DB_PASSWORD;
+    /var/www/mutillidae/classes/MySQLHandler.php:	static public $MUTILLIDAE_DBV1_PASSWORD = "";
+    /var/www/mutillidae/classes/MySQLHandler.php:	static public $MUTILLIDAE_DBV2_PASSWORD = "mutillidae";
+    /var/www/mutillidae/classes/MySQLHandler.php:	static public $SAMURAI_WTF_PASSWORD = "samurai";
+    /var/www/mutillidae/classes/MySQLHandler.php:	        $this->mMySQLConnection = new mysqli($pHOSTNAME,$pUSERNAME, $pPASSWORD, NULL, $pPORT);
+    ```
+
+    <details>
+    <summary>Hasło do bazy to [...]</summary>
+    1. <code>samurai</code>. 
+    </details>
+
+1. Weź pod uwagę, że strona jest cały czas w stanie "zawieszenia".
+<!-- 
 #### Sposób 2
 1. Upewnij się, że aplikacja ciągle działa w tle.
 1. Na jednym terminalu ustaw nasłuchiwanie na dowolnym niefiltrowanym porcie (np. 1337)
@@ -166,7 +194,7 @@ Sprawdzanie tego co widać to nie wszystko. Jednym z ciekawszych elementów, kt�
 
 1. Tak samo jak w sposobie 1 spróbuj odszukać hasło do bazy danych.
 1. Porównaj jakie masz uprawnienia w obu przypadkach? Co może być powodem?
-1. Opisz podatności w tabeli.
+1. Opisz podatności w tabeli. -->
 
 ### Zadanie 4 - Dodatkowe
 Ta część laboratorium jest przeznaczona na własny rekonesans. Wcześniejsze przykłady były podane w wąskim zakresie dlatego teraz pora na rozwinięcie skrzydeł. Przetestuj aplikację we własnym zakresie - z tym co wiesz lub chcesz poznać. Propozycja: skorzystaj z podanych list i testuj wszystko po kolei. 
